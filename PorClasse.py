@@ -8,24 +8,13 @@ import matplotlib.pyplot as plt
 arquivo = "star_classification.csv"
 dados = pd.read_csv(arquivo)
 
-# %%
-dados.describe()
 #%%
-dados.hist(bins=30, figsize=(15,10), edgecolor="black")
-plt.tight_layout()
-plt.show()
-#%%
-dados.skew(numeric_only=True)
-
-
-
-#%%
-#ESTRELAS
+# ESTRELAS
 stars = dados[dados["class"] == "STAR"]
 stars.describe()
 
 #%%
-
+# Histograma das estrelas
 stars.hist(bins=30, figsize=(15,10), edgecolor="black")
 plt.tight_layout()
 plt.show()
@@ -39,6 +28,7 @@ galaxies = dados[dados["class"] == "GALAXY"]
 galaxies.describe()
 
 #%%
+# Histograma das galaxias
 galaxies.hist(bins=30, figsize=(15,10), edgecolor="black")
 plt.tight_layout()
 plt.show()
@@ -46,12 +36,13 @@ plt.show()
 
 
 #%%
-#QUASARS
+# QUASARS
 
 quasars = dados[dados["class"] == "QSO"]
 quasars.describe()
 
 #%%
+# Histograma dos quasars
 quasars.hist(bins=30, figsize=(15,10), edgecolor="black")
 plt.tight_layout()
 plt.show()
@@ -59,11 +50,12 @@ plt.show()
 
 
 #%%
-#TODAS AS CLASSES
+# Histogramas de todas as classes
 
 colunas = dados.select_dtypes(include=["int64","float64"]).columns
 
-fig, axes = plt.subplots(nrows=len(colunas)//3+1, ncols=3, figsize=(18, 4*len(colunas)//3))
+n = len(colunas)
+fig, axes = plt.subplots(nrows=n//3+1, ncols=3, figsize=(18, 4*(n//3+1)))
 
 axes = axes.flatten()
 
@@ -75,7 +67,9 @@ for i, col in enumerate(colunas):
     axes[i].set_title(f"Distribuição de {col}")
     axes[i].legend()
 
+# Remover eixos extras (se existirem)
+for j in range(i+1, len(axes)):
+    fig.delaxes(axes[j])
+
 plt.tight_layout()
 plt.show()
-
-# %%
