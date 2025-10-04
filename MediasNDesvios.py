@@ -17,3 +17,4 @@ dados_numericos["class"] = dados_clean["class"]
 # %%
 estatisticas = dados_numericos.groupby("class").agg(["mean", "std"])
 print(estatisticas)
+# %%
