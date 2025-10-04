@@ -77,3 +77,5 @@ for i, col in enumerate(colunas):
 
 plt.tight_layout()
 plt.show()
+
+# %%
