@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 arquivo = "star_classification.csv"
 dados = pd.read_csv(arquivo)
+dados_clean = dados.drop(columns=["rerun_ID"])
 
 #%%
 # ESTRELAS
@@ -73,3 +74,23 @@ for j in range(i+1, len(axes)):
 
 plt.tight_layout()
 plt.show()
+
+
+#%%
+# Calculo Média e Desvio Padrão Por Classe 
+dados_numericos = dados_clean.select_dtypes(include=[np.number])
+dados_numericos["class"] = dados_clean["class"]
+
+estatisticas = dados_numericos.groupby("class").agg(["mean", "std"])
+print(estatisticas)
+
+
+# %%
+# Skewness Por Classe
+
+dados_numericos = dados_clean.select_dtypes(include=[np.number])
+dados_numericos["class"] = dados_clean["class"]
+
+skew_por_classe = dados_numericos.groupby("class").skew()
+print(skew_por_classe)
+
