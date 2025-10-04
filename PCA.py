@@ -71,7 +71,7 @@ vars = pd.DataFrame({"explicada": explicada, "acumulada": acumulada})
 vars
 
 #%%
-scree_plot(explicada, acumulada)
+scree_plot(explicada)
 
 #%%
 import seaborn as sns
