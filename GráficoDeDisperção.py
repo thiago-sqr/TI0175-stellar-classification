@@ -13,7 +13,7 @@ dados_clean = dados_clean.drop(dados["u"].idxmin())
 
 
 #%%
-
+# sem outlier
 dados_numericos = dados.select_dtypes(include=[np.number])
 dados_numericos["class"] = dados["class"] 
 
@@ -42,9 +42,9 @@ sns.pairplot(
 
 plt.show()
 # %%
+# com outlier
 dados_numericos = dados.select_dtypes(include=[np.number])
-dados_numericos["class"] = dados["class"]  # mantém coluna de classe
-# Pairplot com todos os dados (incluindo outliers)
+dados_numericos["class"] = dados["class"] 
 sns.pairplot(
     dados_numericos,
     hue="class",            
