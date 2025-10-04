@@ -1,4 +1,4 @@
-#%%
+#%% Definindo Funções da PCA
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -30,12 +30,10 @@ def variancia_explicada(autovalores: np.ndarray):
     return explicada, acumulada
 
 
-def pca_variancia(X: np.ndarray):
-    X_centralizado = padronizar(X)
-    cov = covariancias(X_centralizado)
-    autovalores, _ = autos(cov)
+def pca(X: np.ndarray):
+    autovalores, autovetores = autos(covariancias(padronizar(X)))
     explicada, acumulada = variancia_explicada(autovalores)
-    return autovalores, explicada, acumulada
+    return autovalores, autovetores, explicada, acumulada
 
 
 def projetar_dados(X: np.ndarray, autovetores: np.ndarray, k: int):
@@ -54,26 +52,38 @@ def scree_plot(variancia_explicada):
     plt.xticks(pcs)
     plt.legend()
     plt.grid(True)
+    plt.savefig("imagens/PCA-screeplot.pdf")
     plt.show()
 
 
-#%%    
+#%% Definindo X
 
 dados = pd.read_csv("star_classification.csv")
 dados = dados.drop(dados['u'].idxmin()) # <-- Limpando aquele outlier chato
 
+#   Retiradas:
+#       "rerun_ID" --> essa feature não permite a convergência dos autovalores
+#       "class" --> variável alvo de classificação, categórica
+#       "redshift" --> variável alvo de regressão
+
 X = dados.drop(["rerun_ID", "class", "redshift"], axis=1)
 X = np.array(X)
-autovalores, autovetores = autos(covariancias(padronizar(X)))
-explicada, acumulada = variancia_explicada(autovalores)
+
+#%% Realizando PCA
+
+autovalores, autovetores, explicada, acumulada = pca(X)
 
 vars = pd.DataFrame({"explicada": explicada, "acumulada": acumulada})
 vars
+#%% Plotando variância explicada
 
-#%%
 scree_plot(explicada)
 
-#%%
+#%% Plotando Dataset com 2 PC
+
 import seaborn as sns
 dados_2PC = pd.DataFrame(projetar_dados(padronizar(X), autovetores, k=2))
-sns.scatterplot(data=dados_2PC, x=0, y=1)
+dados_2PC["class"] = dados["class"].values
+sns.scatterplot(data=dados_2PC, x=0, y=1, hue="class", palette="rocket")
+plt.savefig("imagens/PCA-2PC-scatterplot.pdf")
+plt.show()
