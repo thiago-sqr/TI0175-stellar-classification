@@ -68,7 +68,6 @@ plt.savefig("graficos/boxplot_redshift_por_classe.pdf", dpi=300)
 plt.show() 
 
 #%%
-
 cols = ["r", "i", "z", "class"]
 dados_subset = dados[cols]
 
@@ -78,10 +77,12 @@ sns.pairplot(
     hue="class",
     palette="rocket",
     diag_kind="hist",
-    plot_kws={"alpha":0.7},
-    diag_kws={"edgecolor":"black"}
+    corner=True,
+    plot_kws={"alpha":0.7, "s":20},
+    diag_kws={"bins":20, "edgecolor":"none"}
 )
 
-plt.suptitle("Pair Plot das Variáveis Fotométricas", fontsize=18, fontweight="bold", y=1.02)
+plt.suptitle("Scatter Plot das Variáveis Fotométricas Vermelhas", fontsize=18)
 plt.tight_layout()
+plt.savefig("graficos/pairplot_fotometricas.png", dpi=300)
 plt.show()
