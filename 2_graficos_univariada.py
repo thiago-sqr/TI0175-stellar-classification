@@ -8,8 +8,13 @@ plt.style.use("seaborn-v0_8")
 dados = pd.read_csv("data/clean_star_classification.csv")
 
 #%% HISTOGRAMA INCONDICIONAL DAS COLUNAS
-dados.hist(bins=30, figsize=(15,10), edgecolor="black")
-plt.suptitle("Distribuição das Variáveis", fontsize=18, fontweight="bold")
+axes = dados.hist(
+    bins=25,
+    figsize=(10,8)
+)
+for ax in axes.flatten():  
+    ax.set_title(ax.get_title(), fontsize=15)
+plt.suptitle("Distribuição das Variáveis", fontsize=20)
 plt.tight_layout()
 plt.savefig("graficos/hist_incond.pdf", dpi=300)
 plt.show()
