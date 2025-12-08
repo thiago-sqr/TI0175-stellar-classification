@@ -1,4 +1,4 @@
-# TI0175-stellar-classification
+# TI0175-HW1-EDA
 
 Este projeto realiza uma análise exploratória de dados (EDA) e Análise de Componentes Principais (PCA) em um conjunto de dados astronômicos, contendo informações fotométricas, posicionais e observacionais de objetos celestes (galáxias, estrelas e quasares). O objetivo é identificar padrões e reduzir a dimensionalidade para facilitar a visualização e interpretação dos dados.
 
